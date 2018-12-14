@@ -1,8 +1,8 @@
 # -*- encoding:utf-8 -*-
 
 import os
+import utils
 import config
-import os.path
 import argparse
 
 def parse_args():
@@ -24,43 +24,14 @@ class lib_mgr(object):
 		project = self.project_path
 		install = config.get_path('libs')
 
-		options = self.gen_options(
+		options = utils.cmake_options(
 			CMAKE_INSTALL_PREFIX = install,
 			CMAKE_EXPORT_NO_PACKAGE_REGISTRY = 'ON'
 		)
 
 		# cmake source target
 		command = 'cmake %s -B %s %s'%(options, project, source)
-		print('command!!!', command)
-		os.system(command)
-	
-	def gen_options(self, **kwds):
-		options = self.get_etc_options()
-		for key, value in kwds.items():
-			option = '-D %s=%s'%(key, value)
-			options.append(option)
-		
-		return ' '.join(options)
-	
-	def get_etc_options(self):
-		options = []
-
-		file_name = config.get_path('etc', 'cmake', '%s.txt'%(self.name))
-		if not os.path.isfile(file_name):
-			return options
-		
-		for line in open(file_name):
-			line = line.strip()
-			if not line:
-				continue
-			
-			tokens = line.split('=')
-			tokens = [token.strip() for token in tokens if token]
-
-			option = '-D %s'%('='.join(tokens))
-			options.append(option)
-
-		return options
+		self.system(command)
 	
 	def system(self, command):
 		print('[command]', command)

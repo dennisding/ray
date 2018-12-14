@@ -1,4 +1,10 @@
+# tmp dir
+/build
+/libs
+
+# python
 */__pycache__
+*.pyc
 
 # Addition files
 ray.code-workspace

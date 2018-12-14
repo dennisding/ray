@@ -1,0 +1,26 @@
+-src
+	ray
+	render
+-lib_src
+	--glm
+	--python3.8
+	...
+-lib
+	--<compiler_1>
+		---<cmake_packages>
+	--<compiler_2>
+		---<cmake_packages>
+-etc
+	cmake
+-tools
+	lib_mgr.py
+
+-build
+	--package
+		---glm
+		---python3.8
+		...
+	
+	ray
+	render
+	...
